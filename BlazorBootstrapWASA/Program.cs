@@ -1,5 +1,7 @@
+using BlazorBootstrapWASA.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using System;
 
 namespace BlazorBootstrapWASA
 {
@@ -10,6 +12,7 @@ namespace BlazorBootstrapWASA
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
+            builder.Services.AddSingleton<ThemeProvider>();
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 

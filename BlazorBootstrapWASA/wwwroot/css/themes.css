@@ -1,0 +1,159 @@
+﻿/* Default (light) theme */
+:root {
+    --bs-body-bg: #fff;
+    --bs-body-color: #212529;
+}
+
+/* Dark theme */
+[data-bs-theme="dark"] {
+    --bs-body-bg: #212529;
+    --bs-body-color: #f8f9fa;
+    --bs-primary: #90caf9;
+}
+
+/* Blue theme */
+[data-bs-theme="blue"] {
+    --bs-body-bg: #e3f2fd;
+    --bs-body-color: #0d47a1;
+    --bs-primary: #1976d2;
+}
+
+/* Green theme */
+[data-bs-theme="green"] {
+    --bs-body-bg: #e8f5e9;
+    --bs-body-color: #1b5e20;
+    --bs-primary: #388e3c;
+}
+
+/* Pink theme */
+[data-bs-theme="pink"] {
+    --bs-body-bg: #fce4ec;
+    --bs-body-color: #880e4f;
+    --bs-primary: #d81b60;
+}
+
+/* Purple theme */
+[data-bs-theme="purple"] {
+    --bs-body-bg: #f3e5f5;
+    --bs-body-color: #4a148c;
+    --bs-primary: #8e24aa;
+}
+
+/* Gray theme */
+[data-bs-theme="gray"] {
+    --bs-body-bg: #e0e0e0;
+    --bs-body-color: #333333;
+    --bs-primary: #757575;
+}
+
+/* Black theme */
+[data-bs-theme="black"] {
+    --bs-body-bg: #111;
+    --bs-body-color: #f0f0f0;
+    --bs-primary: #333;
+}
+
+/* Yellow theme */
+[data-bs-theme="yellow"] {
+    --bs-body-bg: #fffde7;
+    --bs-body-color: #fbc02d;
+    --bs-primary: #ffd600;
+}
+
+/* Mint theme */
+[data-bs-theme="mint"] {
+    --bs-body-bg: #e0f2f1;
+    --bs-body-color: #00796b;
+    --bs-primary: #26a69a;
+}
+
+/* Cyan theme */
+[data-bs-theme="cyan"] {
+    --bs-body-bg: #e0f7fa;
+    --bs-body-color: #00838f;
+    --bs-primary: #00bcd4;
+}
+
+/* Light Blue theme */
+[data-bs-theme="lightblue"] {
+    --bs-body-bg: #e3f2fd;
+    --bs-body-color: #1976d2;
+    --bs-primary: #64b5f6;
+}
+
+/* Rose theme */
+[data-bs-theme="rose"] {
+    --bs-body-bg: #f8bbd0;
+    --bs-body-color: #ad1457;
+    --bs-primary: #f06292;
+}
+
+/* Orange theme */
+[data-bs-theme="orange"] {
+    --bs-body-bg: #fff3e0;
+    --bs-body-color: #e65100;
+    --bs-primary: #ffa726;
+}
+
+/* Light Green theme */
+[data-bs-theme="lightgreen"] {
+    --bs-body-bg: #f1f8e9;
+    --bs-body-color: #558b2f;
+    --bs-primary: #aed581;
+}
+
+/* Aqua theme */
+[data-bs-theme="aqua"] {
+    --bs-body-bg: #e0f7fa;
+    --bs-body-color: #006064;
+    --bs-primary: #4dd0e1;
+}
+
+/* Sky theme */
+[data-bs-theme="sky"] {
+    --bs-body-bg: #e3f2fd;
+    --bs-body-color: #1565c0;
+    --bs-primary: #90caf9;
+}
+
+/* Burgundy theme */
+[data-bs-theme="burgundy"] {
+    --bs-body-bg: #880c27;
+    --bs-body-color: #fff;
+    --bs-primary: #ad1457;
+}
+
+/* Red theme */
+[data-bs-theme="red"] {
+    --bs-body-bg: #c62828;
+    --bs-body-color: #fff;
+    --bs-primary: #ef5350;
+}
+
+/* Dark Green theme */
+[data-bs-theme="darkgreen"] {
+    --bs-body-bg: #1b5e20;
+    --bs-body-color: #fff;
+    --bs-primary: #388e3c;
+}
+
+/* Teal theme */
+[data-bs-theme="teal"] {
+    --bs-body-bg: #004d40;
+    --bs-body-color: #fff;
+    --bs-primary: #009688;
+}
+
+/* Navy theme */
+[data-bs-theme="navy"] {
+    --bs-body-bg: #0d133c;
+    --bs-body-color: #fff;
+    --bs-primary: #1976d2;
+}
+
+/* Violet theme */
+[data-bs-theme="violet"] {
+    --bs-body-bg: #4b206a;
+    --bs-body-color: #fff;
+    --bs-primary: #8e24aa;
+}

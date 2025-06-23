@@ -1,12 +1,54 @@
-﻿@inherits LayoutComponentBase
+﻿@using BlazorBootstrapWASA.Services
+@inject ThemeProvider ThemeProvider
+@inject IJSRuntime JS
+@inherits LayoutComponentBase
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        <div class="top-row px-4 d-flex justify-content-between align-items-center">
+            <a class="navbar-brand text-light"
+               href="https://github.com/konradwisniewski87/BlazorBootstrapWASA"
+               target="_blank">
+                GitHub
+            </a>
+            <button class="btn btn-outline-light d-flex align-items-center"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#themeOffcanvas"
+                    aria-controls="themeOffcanvas">
+                <i class="bi bi-palette2 me-2"></i>
+                Theme
+            </button>
+        </div>
+
+        <!-- Offcanvas menu for theme selection -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="themeOffcanvas" aria-labelledby="themeOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="themeOffcanvasLabel">Choose Theme</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="d-flex flex-wrap gap-3">
+                    @foreach (var theme in themes)
+                    {
+                        <button class="theme-circle-btn border-0"
+                                title="@theme.Name"
+                                style="background: @theme.PreviewGradient; width: 40px; height: 40px; border-radius: 50%;"
+                                @onclick="() => SelectTheme(theme)">
+                        </button>
+                    }
+                </div>
+                <div class="mt-3">
+                    @foreach (var theme in themes)
+                    {
+                        <span class="me-2" style="font-size: 0.9em;">@theme.Name</span>
+                    }
+                </div>
+            </div>
         </div>
 
         <article class="content px-4">
@@ -14,3 +56,43 @@
         </article>
     </main>
 </div>
+
+@code {
+    record ThemeOption(string Name, string Key, string PreviewGradient);
+
+    private readonly List<ThemeOption> themes = new()
+    {
+        new("Light", "light", "linear-gradient(90deg, #fff 50%, #eee 50%)"),
+        new("Dark", "dark", "linear-gradient(90deg, #212529 50%, #000 50%)"),
+        new("Blue", "blue", "linear-gradient(90deg, #1976d2 50%, #90caf9 50%)"),
+        new("Green", "green", "linear-gradient(90deg, #388e3c 50%, #a5d6a7 50%)"),
+        new("Pink", "pink", "linear-gradient(90deg, #d81b60 50%, #f8bbd0 50%)"),
+        new("Purple", "purple", "linear-gradient(90deg, #8e24aa 50%, #ce93d8 50%)"),
+        new("Gray", "gray", "linear-gradient(90deg, #757575 50%, #e0e0e0 50%)"),
+        new("Black", "black", "linear-gradient(90deg, #333 50%, #111 50%)"),
+        new("Yellow", "yellow", "linear-gradient(90deg, #ffd600 50%, #fffde7 50%)"),
+        new("Mint", "mint", "linear-gradient(90deg, #26a69a 50%, #e0f2f1 50%)"),
+        new("Cyan", "cyan", "linear-gradient(90deg, #00bcd4 50%, #e0f7fa 50%)"),
+        new("Light Blue", "lightblue", "linear-gradient(90deg, #64b5f6 50%, #e3f2fd 50%)"),
+        new("Rose", "rose", "linear-gradient(90deg, #f06292 50%, #f8bbd0 50%)"),
+        new("Orange", "orange", "linear-gradient(90deg, #ffa726 50%, #fff3e0 50%)"),
+        new("Light Green", "lightgreen", "linear-gradient(90deg, #aed581 50%, #f1f8e9 50%)"),
+        new("Aqua", "aqua", "linear-gradient(90deg, #4dd0e1 50%, #e0f7fa 50%)"),
+        new("Sky", "sky", "linear-gradient(90deg, #90caf9 50%, #e3f2fd 50%)"),
+        new("Burgundy", "burgundy", "linear-gradient(90deg, #ad1457 50%, #880c27 50%)"),
+        new("Red", "red", "linear-gradient(90deg, #ef5350 50%, #c62828 50%)"),
+        new("Dark Green", "darkgreen", "linear-gradient(90deg, #388e3c 50%, #1b5e20 50%)"),
+        new("Teal", "teal", "linear-gradient(90deg, #009688 50%, #004d40 50%)"),
+        new("Navy", "navy", "linear-gradient(90deg, #1976d2 50%, #0d133c 50%)"),
+        new("Violet", "violet", "linear-gradient(90deg, #8e24aa 50%, #4b206a 50%)"),
+    };
+
+    async Task SelectTheme(ThemeOption option)
+    {
+        // Update current theme in ThemeProvider for Blazor state
+        ThemeProvider.SetTheme($"theme-{option.Key}.css");
+
+        // Update data-bs-theme attribute on <html> via JS to apply CSS vars
+        await JS.InvokeVoidAsync("setBootstrapTheme", option.Key);
+    }
+}

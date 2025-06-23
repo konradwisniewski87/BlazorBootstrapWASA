@@ -1,48 +1,122 @@
 ﻿@page "/"
-@using System.Globalization
+@using BlazorBootstrapWASA.Services
+@inject HttpClient Http
+@inject ThemeProvider ThemeProvider
 
-<h1 class="mb-4">Witamy w demo Blazor z Bootstrapem!</h1>
+<h1>Lorem Ipsum</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra, nisl at pulvinar porttitor, purus lectus vehicula odio, nec vehicula elit dui at massa.</p>
+<p>Praesent euismod, nibh nec bibendum consequat, est sapien ultricies urna, id ultrices mauris turpis sed augue.</p>
 
-<p class="lead">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit libero a elit pulvinar, vel congue elit pulvinar.
-</p>
+<ThemePicker />
 
-<p>
-    Sed sit amet sapien euismod, mattis ex ut, dictum risus. Vivamus vitae turpis eget arcu dignissim consequat.
-</p>
-
-<p>
-    Curabitur a malesuada nulla, a congue tellus. Integer convallis massa in erat tempus, id blandit nulla viverra.
-</p>
-
-<hr />
-
-<h3>Lista korzyści:</h3>
-<ul class="list-group mb-4">
-    <li class="list-group-item">Responsywny interfejs dzięki Bootstrap</li>
-    <li class="list-group-item">Motywy jasny i ciemny (przełącznik)</li>
-    <li class="list-group-item">Prosty layout Blazora</li>
-</ul>
-
-<h3>Dane przykładowe:</h3>
-<table class="table table-striped table-bordered">
-    <thead class="table-dark">
-        <tr>
-            <th>#</th>
-            <th>Nazwa</th>
-            <th>Wartość</th>
-            <th>Data</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (int i = 1; i <= 5; i++)
-        {
+<h2>Weather in Warsaw</h2>
+@if (weather == null)
+{
+    <p>Loading weather data...</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@i</td>
-                <td>Element @i</td>
-                <td>@($"{Random.Shared.Next(10, 1000)} zł")</td>
-                <td>@DateTime.Now.AddDays(-i).ToString("d", CultureInfo.CurrentCulture)</td>
+                <th>Date</th>
+                <th>Temperature (°C)</th>
+                <th>Humidity (%)</th>
+                <th>Pressure (mb)</th>
+                <th>Summary</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var w in weather)
+            {
+                <tr>
+                    <td>@w.Date</td>
+                    <td>@w.Temperature</td>
+                    <td>@w.Humidity</td>
+                    <td>@w.Pressure</td>
+                    <td>@w.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h2>More Info (Accordion)</h2>
+<div class="accordion mb-4" id="demoAccordion">
+  @for (int i = 1; i <= 3; i++)
+  {
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading@i">
+        <button class="accordion-button @(i != 1 ? "collapsed" : "")"
+                type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse@i" aria-expanded="@(i==1)"
+                aria-controls="collapse@i">
+          Accordion Item #@i
+        </button>
+      </h2>
+      <div id="collapse@i" class="accordion-collapse collapse @(i==1 ? "show" : "")"
+           aria-labelledby="heading@i" data-bs-parent="#demoAccordion">
+        <div class="accordion-body">
+          This is the body of item #@i.
+        </div>
+      </div>
+    </div>
+  }
+</div>
+@* Bootstrap accordion usage :contentReference[oaicite:1]{index=1} *@
+
+<h2>Theme Cards</h2>
+<div class="row mb-4">
+  @foreach (var t in new[] { "Light", "Dark", "Blue" })
+  {
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">@t Theme</h5>
+          <p class="card-text">Apply the @t theme via Blazor.</p>
+          <button class="btn btn-primary" @onclick="() => ApplyTheme(t)">
+            Apply @t
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+@* Bootstrap cards demonstration :contentReference[oaicite:2]{index=2} *@
+
+<h2>Choose a City</h2>
+<ul class="list-group mb-3">
+  @foreach (var city in new[] { "Warsaw", "Kraków", "Gdańsk" })
+  {
+    <li class="list-group-item @(city == selectedCity ? "active" : "")"
+        @onclick="() => selectedCity = city">
+      @city
+    </li>
+  }
+</ul>
+<p>Selected city: <strong>@selectedCity</strong></p>
+@* Bootstrap list group with active state :contentReference[oaicite:3]{index=3} *@
+
+@code {
+    private List<WeatherData>? weather;
+    private string selectedCity = "Warsaw";
+
+    protected override async Task OnInitializedAsync()
+    {
+        weather = await Http.GetFromJsonAsync<List<WeatherData>>("sample-data/weather.json");
+    }
+
+    void ApplyTheme(string themeName)
+    {
+        ThemeProvider.SetTheme($"theme-{themeName.ToLower()}.css");
+    }
+
+    public class WeatherData
+    {
+        public string Date { get; set; } = default!;
+        public int Temperature { get; set; }
+        public int Humidity { get; set; }
+        public int Pressure { get; set; }
+        public string Summary { get; set; } = default!;
+    }
+}
