@@ -1,159 +1,83 @@
-﻿/* Default (light) theme */
-:root {
-    --bs-body-bg: #fff;
-    --bs-body-color: #212529;
+﻿[data-bs-theme="blue"] {
+    --bs-body-bg: #e3f2fd; /* Blue 50 */
+    --bs-body-color: #0d47a1; /* Blue 900 */
+    --bs-primary: #1976d2; /* Blue 700 */
 }
 
-/* Dark theme */
-[data-bs-theme="dark"] {
-    --bs-body-bg: #212529;
-    --bs-body-color: #f8f9fa;
-    --bs-primary: #90caf9;
-}
-
-/* Blue theme */
-[data-bs-theme="blue"] {
-    --bs-body-bg: #e3f2fd;
-    --bs-body-color: #0d47a1;
-    --bs-primary: #1976d2;
-}
-
-/* Green theme */
 [data-bs-theme="green"] {
-    --bs-body-bg: #e8f5e9;
-    --bs-body-color: #1b5e20;
-    --bs-primary: #388e3c;
+    --bs-body-bg: #e8f5e9; /* Green 50 */
+    --bs-body-color: #1b5e20; /* Green 900 */
+    --bs-primary: #43a047; /* Green 600 */
 }
 
-/* Pink theme */
-[data-bs-theme="pink"] {
-    --bs-body-bg: #fce4ec;
-    --bs-body-color: #880e4f;
-    --bs-primary: #d81b60;
-}
-
-/* Purple theme */
-[data-bs-theme="purple"] {
-    --bs-body-bg: #f3e5f5;
-    --bs-body-color: #4a148c;
-    --bs-primary: #8e24aa;
-}
-
-/* Gray theme */
-[data-bs-theme="gray"] {
-    --bs-body-bg: #e0e0e0;
-    --bs-body-color: #333333;
-    --bs-primary: #757575;
-}
-
-/* Black theme */
-[data-bs-theme="black"] {
-    --bs-body-bg: #111;
-    --bs-body-color: #f0f0f0;
-    --bs-primary: #333;
-}
-
-/* Yellow theme */
-[data-bs-theme="yellow"] {
-    --bs-body-bg: #fffde7;
-    --bs-body-color: #fbc02d;
-    --bs-primary: #ffd600;
-}
-
-/* Mint theme */
-[data-bs-theme="mint"] {
-    --bs-body-bg: #e0f2f1;
-    --bs-body-color: #00796b;
-    --bs-primary: #26a69a;
-}
-
-/* Cyan theme */
-[data-bs-theme="cyan"] {
-    --bs-body-bg: #e0f7fa;
-    --bs-body-color: #00838f;
-    --bs-primary: #00bcd4;
-}
-
-/* Light Blue theme */
-[data-bs-theme="lightblue"] {
-    --bs-body-bg: #e3f2fd;
-    --bs-body-color: #1976d2;
-    --bs-primary: #64b5f6;
-}
-
-/* Rose theme */
-[data-bs-theme="rose"] {
-    --bs-body-bg: #f8bbd0;
-    --bs-body-color: #ad1457;
-    --bs-primary: #f06292;
-}
-
-/* Orange theme */
-[data-bs-theme="orange"] {
-    --bs-body-bg: #fff3e0;
-    --bs-body-color: #e65100;
-    --bs-primary: #ffa726;
-}
-
-/* Light Green theme */
-[data-bs-theme="lightgreen"] {
-    --bs-body-bg: #f1f8e9;
-    --bs-body-color: #558b2f;
-    --bs-primary: #aed581;
-}
-
-/* Aqua theme */
-[data-bs-theme="aqua"] {
-    --bs-body-bg: #e0f7fa;
-    --bs-body-color: #006064;
-    --bs-primary: #4dd0e1;
-}
-
-/* Sky theme */
-[data-bs-theme="sky"] {
-    --bs-body-bg: #e3f2fd;
-    --bs-body-color: #1565c0;
-    --bs-primary: #90caf9;
-}
-
-/* Burgundy theme */
-[data-bs-theme="burgundy"] {
-    --bs-body-bg: #880c27;
-    --bs-body-color: #fff;
-    --bs-primary: #ad1457;
-}
-
-/* Red theme */
 [data-bs-theme="red"] {
-    --bs-body-bg: #c62828;
-    --bs-body-color: #fff;
-    --bs-primary: #ef5350;
+    --bs-body-bg: #ffebee; /* Red 50 */
+    --bs-body-color: #b71c1c; /* Red 900 */
+    --bs-primary: #e53935; /* Red 600 */
 }
 
-/* Dark Green theme */
-[data-bs-theme="darkgreen"] {
-    --bs-body-bg: #1b5e20;
-    --bs-body-color: #fff;
-    --bs-primary: #388e3c;
+[data-bs-theme="yellow"] {
+    --bs-body-bg: #fffde7; /* Yellow 50 */
+    --bs-body-color: #fbc02d; /* Yellow 700 */
+    --bs-primary: #ffd600; /* Yellow A400 */
 }
 
-/* Teal theme */
+[data-bs-theme="pink"] {
+    --bs-body-bg: #fce4ec; /* Pink 50 */
+    --bs-body-color: #880e4f; /* Pink 900 */
+    --bs-primary: #d81b60; /* Pink 600 */
+}
+
+[data-bs-theme="purple"] {
+    --bs-body-bg: #f3e5f5; /* Purple 50 */
+    --bs-body-color: #4a148c; /* Purple 900 */
+    --bs-primary: #8e24aa; /* Purple 600 */
+}
+
 [data-bs-theme="teal"] {
-    --bs-body-bg: #004d40;
-    --bs-body-color: #fff;
-    --bs-primary: #009688;
+    --bs-body-bg: #e0f2f1; /* Teal 50 */
+    --bs-body-color: #004d40; /* Teal 900 */
+    --bs-primary: #009688; /* Teal 500 */
 }
 
-/* Navy theme */
-[data-bs-theme="navy"] {
-    --bs-body-bg: #0d133c;
-    --bs-body-color: #fff;
-    --bs-primary: #1976d2;
+[data-bs-theme="cyan"] {
+    --bs-body-bg: #e0f7fa; /* Cyan 50 */
+    --bs-body-color: #006064; /* Cyan 900 */
+    --bs-primary: #00bcd4; /* Cyan 500 */
 }
 
-/* Violet theme */
+[data-bs-theme="orange"] {
+    --bs-body-bg: #fff3e0; /* Orange 50 */
+    --bs-body-color: #e65100; /* Orange 900 */
+    --bs-primary: #fb8c00; /* Orange 600 */
+}
+
+[data-bs-theme="rose"] {
+    --bs-body-bg: #f8bbd0; /* Pink 100 */
+    --bs-body-color: #ad1457; /* Pink 800 */
+    --bs-primary: #ec407a; /* Pink 400 */
+}
+
+[data-bs-theme="aqua"] {
+    --bs-body-bg: #e0f7fa; /* Cyan 50 */
+    --bs-body-color: #006064; /* Cyan 900 */
+    --bs-primary: #4dd0e1; /* Cyan 300 */
+}
+
+[data-bs-theme="sky"] {
+    --bs-body-bg: #e3f2fd; /* Light Blue 50 */
+    --bs-body-color: #1565c0; /* Light Blue 800 */
+    --bs-primary: #81d4fa; /* Light Blue 300 */
+}
+
+[data-bs-theme="burgundy"] {
+    --bs-body-bg: #880c27; /* custom burgundy */
+    --bs-body-color: #fff;
+    --bs-primary: #ad1457; /* Pink 800 */
+}
+
 [data-bs-theme="violet"] {
-    --bs-body-bg: #4b206a;
-    --bs-body-color: #fff;
-    --bs-primary: #8e24aa;
+    --bs-body-bg: #ede7f6; /* Deep Purple 50 */
+    --bs-body-color: #4527a0; /* Deep Purple 800 */
+    --bs-primary: #7c4dff; /* Deep Purple A400 */
 }
