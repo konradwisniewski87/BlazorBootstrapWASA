@@ -8,7 +8,6 @@
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra, nisl at pulvinar porttitor, purus lectus vehicula odio, nec vehicula elit dui at massa.</p>
 <p>Praesent euismod, nibh nec bibendum consequat, est sapien ultricies urna, id ultrices mauris turpis sed augue.</p>
 
-<ThemePicker />
 
 <h2>Weather in Warsaw</h2>
 @if (weather == null)
@@ -66,39 +65,35 @@ else
     }
 </div>
 
-@* Bootstrap accordion usage :contentReference[oaicite:1]{index=1} *@
-
 <h2>Theme Cards</h2>
 <div class="row mb-4">
-  @foreach (var t in new[] { "Light", "Dark", "Blue" })
-  {
-    <div class="col-md-4 mb-3">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">@t Theme</h5>
-          <p class="card-text">Apply the @t theme via Blazor.</p>
-          <button class="btn btn-primary" @onclick="() => ApplyTheme(t)">
-            Apply @t
-          </button>
+    @foreach (var t in new[] { "Light", "Dark", "Blue" })
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@t Theme</h5>
+                    <p class="card-text">Apply the @t theme via Blazor.</p>
+                    <button class="btn btn-primary" @onclick="() => ApplyTheme(t)">
+                        Apply @t
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  }
+    }
 </div>
-@* Bootstrap cards demonstration :contentReference[oaicite:2]{index=2} *@
 
 <h2>Choose a City</h2>
 <ul class="list-group mb-3">
-  @foreach (var city in new[] { "Warsaw", "Kraków", "Gdańsk" })
-  {
-    <li class="list-group-item @(city == selectedCity ? "active" : "")"
-        @onclick="() => selectedCity = city">
-      @city
-    </li>
-  }
+    @foreach (var city in new[] { "Warsaw", "Kraków", "Gdańsk" })
+    {
+        <li class="list-group-item @(city == selectedCity ? "active" : "")"
+            @onclick="() => selectedCity = city">
+            @city
+        </li>
+    }
 </ul>
 <p>Selected city: <strong>@selectedCity</strong></p>
-@* Bootstrap list group with active state :contentReference[oaicite:3]{index=3} *@
 
 @code {
     private List<WeatherData>? weather;
@@ -122,5 +117,6 @@ else
         public int Humidity { get; set; }
         public int Pressure { get; set; }
         public string Summary { get; set; } = default!;
+        public DateTime DateAsDateTime => DateTime.Parse(Date);
     }
 }
