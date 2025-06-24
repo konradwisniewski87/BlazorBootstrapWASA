@@ -3,11 +3,12 @@
 @inject HttpClient Http
 @inject ThemeProvider ThemeProvider
 @inject IJSRuntime JS
+@using BlazorBootstrap
+@using System.Globalization
 
 <h1>Lorem Ipsum</h1>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra, nisl at pulvinar porttitor, purus lectus vehicula odio, nec vehicula elit dui at massa.</p>
 <p>Praesent euismod, nibh nec bibendum consequat, est sapien ultricies urna, id ultrices mauris turpis sed augue.</p>
-
 
 <h2>Weather in Warsaw</h2>
 @if (weather == null)
@@ -40,6 +41,19 @@ else
         </tbody>
     </table>
 }
+
+@if (weather == null)
+{
+    <p>Loading weather data...</p>
+}
+else
+{
+    <h3>Temperature Chart</h3>
+    <LineChart @ref="lineChart" Width="800" Height="300" />
+    <table class="table table-striped theme-table">
+    </table>
+}
+
 
 <h2>More Info (Accordion)</h2>
 <div class="accordion mb-4" id="demoAccordion">
@@ -99,9 +113,51 @@ else
     private List<WeatherData>? weather;
     private string selectedCity = "Warsaw";
 
+    private LineChart? lineChart;
+    private ChartData? chartData;
+    private LineChartOptions? lineChartOptions;
+
     protected override async Task OnInitializedAsync()
     {
         weather = await Http.GetFromJsonAsync<List<WeatherData>>("sample-data/weather.json");
+
+        // Prepare chart data and options if weather data exists
+        if (weather != null)
+        {
+            var primary = await JS.InvokeAsync<string>("getCssColor", "--bs-primary");
+            var textColor = await JS.InvokeAsync<string>("getCssColor", "--bs-body-color");
+			// var backgroundColor = await JS.InvokeAsync<string>("getCssColor", "--bs-body-bg");
+            chartData = new ChartData
+            {
+                Labels = weather.Select(w => w.Date).ToList(),
+                Datasets = new List<IChartDataset>
+                {
+                    new LineChartDataset
+                    {
+                        Label = "Temperature (°C)",
+                        Data = weather.Select(w => w.Temperature).ToList(),
+                        BorderColor = primary.Trim(),
+                        BackgroundColor = ConvertSemiTransparent(primary.Trim(), 0.2),
+                        BorderWidth = 4.0,
+                        Fill = true
+                    }
+                }
+            };
+
+            // No title property, just set responsive to true
+            lineChartOptions = new LineChartOptions
+            {
+                Responsive = true
+            };
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (lineChart != null && chartData != null && lineChartOptions != null)
+        {
+            await lineChart.InitializeAsync(chartData, lineChartOptions);
+        }
     }
 
     void ApplyTheme(string themeName)
@@ -113,10 +169,24 @@ else
     public class WeatherData
     {
         public string Date { get; set; } = default!;
-        public int Temperature { get; set; }
-        public int Humidity { get; set; }
+        public double? Temperature { get; set; }
+        public double Humidity { get; set; }
         public int Pressure { get; set; }
         public string Summary { get; set; } = default!;
         public DateTime DateAsDateTime => DateTime.Parse(Date);
+    }
+
+    static string ConvertSemiTransparent(string hex, double opacity)
+    {
+        // hex bez '#'
+        hex = hex.TrimStart('#');
+        if (hex.Length == 6)
+        {
+            var r = int.Parse(hex.Substring(0, 2), NumberStyles.HexNumber);
+            var g = int.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
+            var b = int.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
+            return $"rgba({r},{g},{b},{opacity})";
+        }
+        return $"rgba(0,0,0,{opacity})";
     }
 }
