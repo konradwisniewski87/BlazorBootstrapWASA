@@ -5,7 +5,7 @@
 @inject IJSRuntime JS
 @using BlazorBootstrap
 @using System.Globalization
-
+@implements IDisposable
 
 <h1>Lorem Ipsum</h1>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra, nisl at pulvinar porttitor, purus lectus vehicula odio, nec vehicula elit dui at massa.</p>
@@ -153,6 +153,17 @@ else
         }
     }
 
+    protected override void OnInitialized()
+    {
+        ThemeProvider.OnThemeChanged += OnThemeChangedHandler;
+    }
+
+    private async void OnThemeChangedHandler()
+    {
+        await InvokeAsync(UpdateChartColorsAsync);
+        StateHasChanged();
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (lineChart != null && chartData != null && lineChartOptions != null)
@@ -203,5 +214,10 @@ else
             ds.BackgroundColor = bg;
             await lineChart!.UpdateAsync(chartData, lineChartOptions!);
         }
+    }
+
+    public void Dispose()
+    {
+        ThemeProvider.OnThemeChanged -= OnThemeChangedHandler;
     }
 }
