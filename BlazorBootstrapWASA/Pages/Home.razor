@@ -6,6 +6,7 @@
 @using BlazorBootstrap
 @using System.Globalization
 
+
 <h1>Lorem Ipsum</h1>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra, nisl at pulvinar porttitor, purus lectus vehicula odio, nec vehicula elit dui at massa.</p>
 <p>Praesent euismod, nibh nec bibendum consequat, est sapien ultricies urna, id ultrices mauris turpis sed augue.</p>
@@ -160,10 +161,11 @@ else
         }
     }
 
-    void ApplyTheme(string themeName)
+    protected async Task ApplyTheme(string themeName)
     {
         ThemeProvider.SetTheme($"theme-{themeName.ToLower()}.css");
-        JS.InvokeVoidAsync("setBootstrapTheme", themeName.ToLower());
+        await JS.InvokeVoidAsync("setBootstrapTheme", themeName.ToLower());
+        await UpdateChartColorsAsync();
     }
 
     public class WeatherData
@@ -188,5 +190,18 @@ else
             return $"rgba({r},{g},{b},{opacity})";
         }
         return $"rgba(0,0,0,{opacity})";
+    }
+
+    private async Task UpdateChartColorsAsync()
+    {
+        var primary = (await JS.InvokeAsync<string>("getCssColor", "--bs-primary")).Trim();
+        var bg = ConvertSemiTransparent(primary, 0.2);
+
+        if (chartData?.Datasets?.FirstOrDefault() is LineChartDataset ds)
+        {
+            ds.BorderColor = primary;
+            ds.BackgroundColor = bg;
+            await lineChart!.UpdateAsync(chartData, lineChartOptions!);
+        }
     }
 }
