@@ -11,6 +11,12 @@
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra, nisl at pulvinar porttitor, purus lectus vehicula odio, nec vehicula elit dui at massa.</p>
 <p>Praesent euismod, nibh nec bibendum consequat, est sapien ultricies urna, id ultrices mauris turpis sed augue.</p>
 
+<div class="alert alert-info" role="alert">
+	<strong>Note:</strong> This is a sample Blazor WebAssembly application using Blazor Bootstrap components.
+</div>
+
+
+<br />
 <h2>Weather in Warsaw</h2>
 @if (weather == null)
 {
@@ -51,35 +57,38 @@ else
 {
     <h3>Temperature Chart</h3>
     <LineChart @ref="lineChart" Width="800" Height="300" />
-    <table class="table table-striped theme-table">
-    </table>
 }
 
-
+<br />
 <h2>More Info (Accordion)</h2>
-<div class="accordion mb-4" id="demoAccordion">
-    @for (int i = 1; i <= 3; i++)
-    {
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="heading@i">
-                <button class="accordion-button @(i != 1 ? "collapsed" : "")"
-                        type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapse@i" aria-expanded="@(i == 1 ? "true" : "false")"
-                        aria-controls="collapse@i">
-                    Accordion Item #@i
-                </button>
-            </h2>
-            <div id="collapse@i"
-                 class="accordion-collapse collapse @(i == 1 ? "show" : "")"
-                 aria-labelledby="heading@i" data-bs-parent="#demoAccordion">
-                <div class="accordion-body">
-                    This is the body of item #@i.
-                </div>
-            </div>
-        </div>
-    }
-</div>
+<Accordion>
+    <AccordionItem>
+        <TitleTemplate>
+            <Icon Name="IconName.HouseFill" Class="me-1" /> Accordion Item #1
+        </TitleTemplate>
+        <Content>
+            <b>This is the first item's accordion body.</b> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the .accordion-body, though the transition does limit overflow.
+        </Content>
+    </AccordionItem>
+    <AccordionItem>
+        <TitleTemplate>
+            <Icon Name="IconName.PersonFill" Class="me-1" /> Accordion Item #2
+        </TitleTemplate>
+        <Content>
+            <b>This is the second item's accordion body.</b> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the .accordion-body, though the transition does limit overflow.
+        </Content>
+    </AccordionItem>
+    <AccordionItem>
+        <TitleTemplate>
+            <Icon Name="IconName.PhoneFill" Class="me-1" /> Accordion Item #3
+        </TitleTemplate>
+        <Content>
+            <b>This is the third item's accordion body.</b> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the .accordion-body, though the transition does limit overflow.
+        </Content>
+    </AccordionItem>
+</Accordion>
 
+<br />
 <h2>Theme Cards</h2>
 <div class="row mb-4">
     @foreach (var t in new[] { "Light", "Dark", "Blue" })
@@ -98,6 +107,7 @@ else
     }
 </div>
 
+<br />
 <h2>Choose a City</h2>
 <ul class="list-group mb-3">
     @foreach (var city in new[] { "Warsaw", "Kraków", "Gdańsk" })
@@ -109,6 +119,17 @@ else
     }
 </ul>
 <p>Selected city: <strong>@selectedCity</strong></p>
+
+
+<br />
+<div>
+    <Alert Color="AlertColor.Primary"> <Icon Name="IconName.InfoCircleFill" class="me-2"></Icon>An example alert with an icon </Alert>
+    <Alert Color="AlertColor.Success"> <Icon Name="IconName.CheckCircleFill" class="me-2"></Icon>A simple success alert with an icon </Alert>
+    <Alert Color="AlertColor.Danger"> <Icon Name="IconName.ExclamationTriangleFill" class="me-2"></Icon>A simple danger alert with an icon </Alert>
+    <Alert Color="AlertColor.Warning"> <Icon Name="IconName.ExclamationTriangleFill" class="me-2"></Icon>A simple warning alert with an icon </Alert>
+</div>
+
+<br />
 
 @code {
     private List<WeatherData>? weather;
@@ -122,12 +143,11 @@ else
     {
         weather = await Http.GetFromJsonAsync<List<WeatherData>>("sample-data/weather.json");
 
-        // Prepare chart data and options if weather data exists
         if (weather != null)
         {
             var primary = await JS.InvokeAsync<string>("getCssColor", "--bs-primary");
             var textColor = await JS.InvokeAsync<string>("getCssColor", "--bs-body-color");
-			// var backgroundColor = await JS.InvokeAsync<string>("getCssColor", "--bs-body-bg");
+
             chartData = new ChartData
             {
                 Labels = weather.Select(w => w.Date).ToList(),
@@ -145,7 +165,6 @@ else
                 }
             };
 
-            // No title property, just set responsive to true
             lineChartOptions = new LineChartOptions
             {
                 Responsive = true
@@ -191,7 +210,6 @@ else
 
     static string ConvertSemiTransparent(string hex, double opacity)
     {
-        // hex bez '#'
         hex = hex.TrimStart('#');
         if (hex.Length == 6)
         {
