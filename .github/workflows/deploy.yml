@@ -1,0 +1,29 @@
+name: Deploy Blazor to GitHub Pages
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.301
+      - name: Install wasm-tools
+        run: dotnet workload install wasm-tools
+      - name: Publish
+        run: |
+            dotnet publish BlazorBootstrapWASA/BlazorBootstrapWASA.csproj \
+            -c Release \
+            -o dist
+      - name: Copy and fix files
+        run: |
+          cp dist/wwwroot/index.html dist/wwwroot/404.html
+          touch dist/wwwroot/.nojekyll
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: dist/wwwroot
